@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learn Hiragana - Complete Course</title>
+<title>Learn Japanese - Complete Course</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -11,22 +11,60 @@
     font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     background: #f8f5f0;
     color: #333;
-    overflow: hidden;
-    height: 100vh;
+    overflow-x: hidden;
+    min-height: 100vh;
   }
+
+  /* ===== HEADER ===== */
+  .header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 52px;
+    background: rgba(248, 245, 240, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    z-index: 200;
+  }
+
+  .header-title {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #e05a3a;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    text-decoration: none;
+  }
+
+  .header-title:hover { opacity: 0.7; }
 
   /* ===== MENU SCREEN ===== */
   #menu {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
-    padding: 40px;
+    min-height: 100vh;
+    padding: 80px 40px 40px;
   }
 
-  #menu h1 { font-size: 2.8em; color: #e05a3a; margin-bottom: 8px; }
-  #menu .menu-sub { font-size: 1.2em; color: #888; margin-bottom: 40px; }
+  #menu .menu-sub { font-size: 1.15em; color: #888; margin-bottom: 32px; }
+
+  .section-heading {
+    width: 100%;
+    max-width: 900px;
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 28px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #e8e4df;
+  }
+
+  .section-heading:first-of-type { margin-top: 0; }
 
   .lesson-grid {
     display: grid;
@@ -50,10 +88,11 @@
   .lesson-card:hover { border-color: #e05a3a; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
   .lesson-card .lnum { font-size: 0.85em; color: #e05a3a; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
   .lesson-card .lchars {
-    font-size: 2em;
+    font-size: 1.8em;
     font-family: 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'Noto Sans JP', sans-serif;
-    margin: 10px 0;
+    margin: 8px 0;
     color: #333;
+    letter-spacing: 2px;
   }
   .lesson-card .ldesc { font-size: 0.95em; color: #888; }
 
@@ -65,10 +104,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    padding: 40px 60px;
+    min-height: 100vh;
+    padding: 66px 60px 80px;
     text-align: center;
     animation: fadeIn 0.35s ease;
+    overflow-y: auto;
   }
 
   .slide.active { display: flex; }
@@ -263,19 +303,16 @@
   .nav-btn:hover { background: #e05a3a; color: #fff; }
   .nav-btn:disabled { opacity: 0.3; cursor: default; background: #fff; color: #e05a3a; }
 
-  .nav-btn.menu-btn { border-color: #2d8cf0; color: #2d8cf0; }
-  .nav-btn.menu-btn:hover { background: #2d8cf0; color: #fff; }
-
   .slide-counter { color: #aaa; font-size: 0.95em; min-width: 80px; text-align: center; }
 
   /* Progress */
   .progress {
     position: fixed;
-    top: 0; left: 0;
+    top: 52px; left: 0;
     height: 4px;
     background: linear-gradient(90deg, #e05a3a, #f0a030);
     transition: width 0.3s;
-    z-index: 100;
+    z-index: 199;
     border-radius: 0 2px 2px 0;
   }
 
@@ -306,33 +343,166 @@
   .system-card .desc { color: #888; font-size: 0.9em; margin-top: 6px; }
 
   /* Responsive */
+  /* ===== GENKI LESSON STYLES ===== */
+  .lesson-card.genki { border-left: 4px solid #2d8cf0; }
+  .lesson-card.genki:hover { border-color: #2d8cf0; }
+  .lesson-card.genki .lnum { color: #2d8cf0; }
+
+  .grammar-pattern {
+    font-size: 2.2em;
+    font-weight: 700;
+    color: #333;
+    margin: 18px 0;
+    font-family: 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'Noto Sans JP', sans-serif;
+  }
+
+  .gp-particle { color: #e05a3a; font-weight: 800; }
+  .gp-copula { color: #2d8cf0; font-weight: 800; }
+
+  .grammar-breakdown {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 16px 0;
+  }
+
+  .breakdown-item {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    text-align: center;
+    min-width: 100px;
+  }
+
+  .breakdown-item .part { font-size: 1.5em; font-weight: 700; color: #333; }
+  .breakdown-item .role { font-size: 0.85em; color: #888; margin-top: 4px; }
+
+  .example-sentence {
+    background: #f0f6ff;
+    border-radius: 12px;
+    padding: 16px 24px;
+    margin: 8px 0;
+    max-width: 640px;
+    text-align: left;
+  }
+
+  .example-sentence .jp-line {
+    font-size: 1.4em;
+    font-family: 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'Noto Sans JP', sans-serif;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  .example-sentence .en-line { font-size: 1em; color: #666; }
+
+  .dialogue-container {
+    max-width: 560px;
+    width: 100%;
+    margin: 16px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .dialogue-line { display: flex; flex-direction: column; }
+  .dialogue-line.right { align-items: flex-end; }
+  .dialogue-line.left { align-items: flex-start; }
+
+  .speaker-name {
+    font-size: 0.8em;
+    font-weight: 700;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    padding: 0 14px;
+  }
+
+  .dialogue-bubble {
+    background: #fff;
+    border-radius: 18px;
+    padding: 14px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    max-width: 85%;
+    text-align: left;
+  }
+
+  .dialogue-line.right .dialogue-bubble { background: #e8f4ff; }
+
+  .dialogue-bubble .jp-text {
+    font-size: 1.2em;
+    font-family: 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'Noto Sans JP', sans-serif;
+    color: #333;
+  }
+
+  .dialogue-bubble .en-text { font-size: 0.9em; color: #888; margin-top: 4px; }
+
+  .word-card .context { font-size: 0.8em; color: #aaa; margin-top: 4px; font-style: italic; }
+
+  .phrase-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin: 12px 0;
+  }
+
+  .phrase-jp {
+    font-size: 3em;
+    font-family: 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'Noto Sans JP', sans-serif;
+    color: #333;
+  }
+
+  .phrase-rm { font-size: 1.3em; color: #2d8cf0; font-weight: 600; }
+  .phrase-en { font-size: 1.1em; color: #666; }
+  .phrase-context { font-size: 0.95em; color: #999; font-style: italic; margin-top: 4px; }
+  .phrase-casual { font-size: 1em; color: #888; margin-top: 8px; }
+  .phrase-casual span { color: #e05a3a; font-weight: 600; }
+
+  /* Quiz text question (non-character) */
+  .quiz-text {
+    font-size: 1.6em;
+    font-family: 'Hiragino Kaku Gothic Pro', 'Yu Gothic', 'Noto Sans JP', sans-serif;
+    color: #333;
+    margin: 8px 0 18px;
+  }
+
   @media (max-width: 768px) {
-    .slide { padding: 20px 24px; }
+    #menu { padding: 70px 20px 30px; }
+    .slide { padding: 60px 24px 20px; }
     .two-col { grid-template-columns: 1fr; gap: 16px; }
     .char-giant { font-size: 7em; }
     .systems-grid { grid-template-columns: 1fr; }
     h1 { font-size: 2em; }
     h2 { font-size: 1.6em; }
     .word-grid { grid-template-columns: repeat(2, 1fr); }
+    .grammar-pattern { font-size: 1.6em; }
+    .phrase-jp { font-size: 2.2em; }
+    .dialogue-bubble { max-width: 95%; }
+    .grammar-breakdown { gap: 8px; }
+    .breakdown-item { min-width: 80px; padding: 10px 14px; }
   }
 </style>
 </head>
 <body>
 
+<header class="header">
+  <span class="header-title" onclick="goToMenu()">Learn Japanese</span>
+</header>
 <div class="progress" id="progress"></div>
 
 <!-- ===== MENU ===== -->
 <div id="menu">
-  <h1>Learn Hiragana</h1>
   <p class="menu-sub">Complete course for beginners</p>
-  <div class="lesson-grid" id="lessonGrid"></div>
+  <div id="lessonGrid"></div>
 </div>
 
 <!-- ===== SLIDESHOW ===== -->
 <div id="slideshow">
   <div id="slidesContainer"></div>
   <div class="nav">
-    <button class="nav-btn menu-btn" onclick="goToMenu()">Menu</button>
     <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">&larr; Back</button>
     <span class="slide-counter" id="counter"></span>
     <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next &rarr;</button>
@@ -344,9 +514,9 @@
 //  LESSON DATA
 // ============================================================
 const LESSONS = [
-  // ── LESSON 1: Vowels + K ──
+  // ── Hiragana 1: Vowels + K ──
   {
-    title: "Lesson 1",
+    title: "Hiragana 1",
     subtitle: "Vowels & K-row",
     rows: [
       {
@@ -361,12 +531,12 @@ const LESSONS = [
           { ch:'\u304a', rm:'o', pron:'Say "oh" \u2014 like "go" or "so"', strokes:['Horizontal line, left to right','Vertical line with curve at bottom','Small stroke on the right side'], tip:'\u304a looks like \u3042 but with a small extra stroke. Don\'t mix them up!' }
         ],
         words: [
-          { jp:'\u3042\u3044', rm:'a-i', en:'love' },
-          { jp:'\u3044\u3048', rm:'i-e', en:'house' },
-          { jp:'\u3046\u3048', rm:'u-e', en:'above / up' },
-          { jp:'\u3042\u304a\u3044', rm:'a-o-i', en:'blue / green' },
-          { jp:'\u3042\u3046', rm:'a-u', en:'to meet' },
-          { jp:'\u3044\u3046', rm:'i-u', en:'to say' }
+          { jp:'\u3042\u3044', rm:'a-i', en:'love', icon:'\u2764\uFE0F' },
+          { jp:'\u3044\u3048', rm:'i-e', en:'house', icon:'\u{1F3E0}' },
+          { jp:'\u3046\u3048', rm:'u-e', en:'above / up', icon:'\u2B06\uFE0F' },
+          { jp:'\u3042\u304a\u3044', rm:'a-o-i', en:'blue / green', icon:'\u{1F535}' },
+          { jp:'\u3042\u3046', rm:'a-u', en:'to meet', icon:'\u{1F91D}' },
+          { jp:'\u3044\u3046', rm:'i-u', en:'to say', icon:'\u{1F4AC}' }
         ]
       },
       {
@@ -381,20 +551,20 @@ const LESSONS = [
           { ch:'\u3053', rm:'ko', pron:'Say "koh" \u2014 like "coat" without the t', strokes:['Top horizontal line','Bottom line with slight curve'], tip:'\u3053 looks like two mouths stacked \u2014 saying "ko-ko" (cluck cluck)!' }
         ],
         words: [
-          { jp:'\u304b\u304a', rm:'ka-o', en:'face' },
-          { jp:'\u304d', rm:'ki', en:'tree' },
-          { jp:'\u3053\u3044', rm:'ko-i', en:'carp (fish)' },
-          { jp:'\u3044\u3051', rm:'i-ke', en:'pond' },
-          { jp:'\u3053\u3048', rm:'ko-e', en:'voice' },
-          { jp:'\u304b\u304d', rm:'ka-ki', en:'persimmon' }
+          { jp:'\u304b\u304a', rm:'ka-o', en:'face', icon:'\u{1F642}' },
+          { jp:'\u304d', rm:'ki', en:'tree', icon:'\u{1F333}' },
+          { jp:'\u3053\u3044', rm:'ko-i', en:'carp (fish)', icon:'\u{1F41F}' },
+          { jp:'\u3044\u3051', rm:'i-ke', en:'pond', icon:'\u{1F4A7}' },
+          { jp:'\u3053\u3048', rm:'ko-e', en:'voice', icon:'\u{1F5E3}\uFE0F' },
+          { jp:'\u304b\u304d', rm:'ka-ki', en:'persimmon', icon:'\u{1F351}' }
         ]
       }
     ]
   },
 
-  // ── LESSON 2: S-row + T-row ──
+  // ── Hiragana 2: S-row + T-row ──
   {
-    title: "Lesson 2",
+    title: "Hiragana 2",
     subtitle: "S-row & T-row",
     rows: [
       {
@@ -409,12 +579,12 @@ const LESSONS = [
           { ch:'\u305d', rm:'so', pron:'Say "soh" \u2014 like "so" in English', strokes:['Starting top-left, curve right','Then zigzag down to the bottom'], tip:'\u305d looks like a zigzag \u2014 like sewing ("so" in Japanese means "to sew")!' }
         ],
         words: [
-          { jp:'\u3055\u3051', rm:'sa-ke', en:'salmon / rice wine' },
-          { jp:'\u3059\u3057', rm:'su-shi', en:'sushi' },
-          { jp:'\u3057\u304a', rm:'shi-o', en:'salt' },
-          { jp:'\u3042\u3055', rm:'a-sa', en:'morning' },
-          { jp:'\u3059\u304d', rm:'su-ki', en:'like (favorite)' },
-          { jp:'\u305d\u3053', rm:'so-ko', en:'there' }
+          { jp:'\u3055\u3051', rm:'sa-ke', en:'salmon / rice wine', icon:'\u{1F376}' },
+          { jp:'\u3059\u3057', rm:'su-shi', en:'sushi', icon:'\u{1F363}' },
+          { jp:'\u3057\u304a', rm:'shi-o', en:'salt', icon:'\u{1F9C2}' },
+          { jp:'\u3042\u3055', rm:'a-sa', en:'morning', icon:'\u{1F305}' },
+          { jp:'\u3059\u304d', rm:'su-ki', en:'like (favorite)', icon:'\u{1F496}' },
+          { jp:'\u305d\u3053', rm:'so-ko', en:'there', icon:'\u{1F449}' }
         ]
       },
       {
@@ -429,20 +599,20 @@ const LESSONS = [
           { ch:'\u3068', rm:'to', pron:'Say "toh" \u2014 like "toe"', strokes:['Vertical line curving slightly','Short stroke beside it on the right'], tip:'\u3068 looks like a door \u2014 and "to" sounds like "toe" knocking on a door!' }
         ],
         words: [
-          { jp:'\u3066', rm:'te', en:'hand' },
-          { jp:'\u3046\u305f', rm:'u-ta', en:'song' },
-          { jp:'\u3064\u304d', rm:'tsu-ki', en:'moon' },
-          { jp:'\u305f\u3053', rm:'ta-ko', en:'octopus' },
-          { jp:'\u3057\u305f', rm:'shi-ta', en:'below / under' },
-          { jp:'\u305d\u3068', rm:'so-to', en:'outside' }
+          { jp:'\u3066', rm:'te', en:'hand', icon:'\u270B' },
+          { jp:'\u3046\u305f', rm:'u-ta', en:'song', icon:'\u{1F3B5}' },
+          { jp:'\u3064\u304d', rm:'tsu-ki', en:'moon', icon:'\u{1F319}' },
+          { jp:'\u305f\u3053', rm:'ta-ko', en:'octopus', icon:'\u{1F419}' },
+          { jp:'\u3057\u305f', rm:'shi-ta', en:'below / under', icon:'\u2B07\uFE0F' },
+          { jp:'\u305d\u3068', rm:'so-to', en:'outside', icon:'\u{1F3DE}\uFE0F' }
         ]
       }
     ]
   },
 
-  // ── LESSON 3: N-row + H-row ──
+  // ── Hiragana 3: N-row + H-row ──
   {
-    title: "Lesson 3",
+    title: "Hiragana 3",
     subtitle: "N-row & H-row",
     rows: [
       {
@@ -457,12 +627,12 @@ const LESSONS = [
           { ch:'\u306e', rm:'no', pron:'Say "noh" \u2014 like "no" in English', strokes:['One spiral stroke \u2014 loop around clockwise'], tip:'\u306e is a simple spiral \u2014 like the English word "no" going in circles!' }
         ],
         words: [
-          { jp:'\u306a\u3064', rm:'na-tsu', en:'summer' },
-          { jp:'\u306b\u304f', rm:'ni-ku', en:'meat' },
-          { jp:'\u3044\u306c', rm:'i-nu', en:'dog' },
-          { jp:'\u306d\u3053', rm:'ne-ko', en:'cat' },
-          { jp:'\u306a\u306b', rm:'na-ni', en:'what?' },
-          { jp:'\u306e\u3053', rm:'no-ko', en:'remaining' }
+          { jp:'\u306a\u3064', rm:'na-tsu', en:'summer', icon:'\u2600\uFE0F' },
+          { jp:'\u306b\u304f', rm:'ni-ku', en:'meat', icon:'\u{1F356}' },
+          { jp:'\u3044\u306c', rm:'i-nu', en:'dog', icon:'\u{1F436}' },
+          { jp:'\u306d\u3053', rm:'ne-ko', en:'cat', icon:'\u{1F431}' },
+          { jp:'\u306a\u306b', rm:'na-ni', en:'what?', icon:'\u2753' },
+          { jp:'\u306e\u3053', rm:'no-ko', en:'remaining', icon:'\u{1F4E6}' }
         ]
       },
       {
@@ -477,20 +647,20 @@ const LESSONS = [
           { ch:'\u307b', rm:'ho', pron:'Say "hoh" \u2014 like "hope" without the -pe', strokes:['Vertical line on the left','Horizontal line','Short horizontal line','Curved line on the right'], tip:'\u307b looks like a building with floors \u2014 "ho"-tel!' }
         ],
         words: [
-          { jp:'\u306f\u306a', rm:'ha-na', en:'flower / nose' },
-          { jp:'\u3072\u3068', rm:'hi-to', en:'person' },
-          { jp:'\u3075\u306d', rm:'fu-ne', en:'ship' },
-          { jp:'\u306f\u3057', rm:'ha-shi', en:'chopsticks / bridge' },
-          { jp:'\u307b\u3057', rm:'ho-shi', en:'star' },
-          { jp:'\u3078\u305f', rm:'he-ta', en:'clumsy / bad at' }
+          { jp:'\u306f\u306a', rm:'ha-na', en:'flower / nose', icon:'\u{1F338}' },
+          { jp:'\u3072\u3068', rm:'hi-to', en:'person', icon:'\u{1F9D1}' },
+          { jp:'\u3075\u306d', rm:'fu-ne', en:'ship', icon:'\u{1F6A2}' },
+          { jp:'\u306f\u3057', rm:'ha-shi', en:'chopsticks / bridge', icon:'\u{1F962}' },
+          { jp:'\u307b\u3057', rm:'ho-shi', en:'star', icon:'\u2B50' },
+          { jp:'\u3078\u305f', rm:'he-ta', en:'clumsy / bad at', icon:'\u{1F937}' }
         ]
       }
     ]
   },
 
-  // ── LESSON 4: M-row + Y-row ──
+  // ── Hiragana 4: M-row + Y-row ──
   {
-    title: "Lesson 4",
+    title: "Hiragana 4",
     subtitle: "M-row & Y-row",
     rows: [
       {
@@ -505,12 +675,12 @@ const LESSONS = [
           { ch:'\u3082', rm:'mo', pron:'Say "moh" \u2014 like "more" without the r', strokes:['Top horizontal line','Bottom horizontal line','Vertical line curving through both'], tip:'\u3082 looks like the hiragana \u3057 with two lines through it!' }
         ],
         words: [
-          { jp:'\u307e\u3061', rm:'ma-chi', en:'town / city' },
-          { jp:'\u307f\u307f', rm:'mi-mi', en:'ear' },
-          { jp:'\u3080\u3057', rm:'mu-shi', en:'insect / bug' },
-          { jp:'\u3081', rm:'me', en:'eye' },
-          { jp:'\u3082\u306e', rm:'mo-no', en:'thing' },
-          { jp:'\u304d\u3082\u306e', rm:'ki-mo-no', en:'kimono' }
+          { jp:'\u307e\u3061', rm:'ma-chi', en:'town / city', icon:'\u{1F3D8}\uFE0F' },
+          { jp:'\u307f\u307f', rm:'mi-mi', en:'ear', icon:'\u{1F442}' },
+          { jp:'\u3080\u3057', rm:'mu-shi', en:'insect / bug', icon:'\u{1F41B}' },
+          { jp:'\u3081', rm:'me', en:'eye', icon:'\u{1F441}\uFE0F' },
+          { jp:'\u3082\u306e', rm:'mo-no', en:'thing', icon:'\u{1F4E6}' },
+          { jp:'\u304d\u3082\u306e', rm:'ki-mo-no', en:'kimono', icon:'\u{1F458}' }
         ]
       },
       {
@@ -523,20 +693,20 @@ const LESSONS = [
           { ch:'\u3088', rm:'yo', pron:'Say "yoh" \u2014 like "yoga" without the -ga', strokes:['Top horizontal line','Vertical line going down with a curve at bottom'], tip:'\u3088 looks like a person doing "yo"-ga!' }
         ],
         words: [
-          { jp:'\u3084\u307e', rm:'ya-ma', en:'mountain' },
-          { jp:'\u3086\u304d', rm:'yu-ki', en:'snow' },
-          { jp:'\u3088\u3053', rm:'yo-ko', en:'side / beside' },
-          { jp:'\u3084\u3059\u307f', rm:'ya-su-mi', en:'rest / holiday' },
-          { jp:'\u3086\u3081', rm:'yu-me', en:'dream' },
-          { jp:'\u3088\u306a\u304b', rm:'yo-na-ka', en:'midnight' }
+          { jp:'\u3084\u307e', rm:'ya-ma', en:'mountain', icon:'\u{1F3D4}\uFE0F' },
+          { jp:'\u3086\u304d', rm:'yu-ki', en:'snow', icon:'\u2744\uFE0F' },
+          { jp:'\u3088\u3053', rm:'yo-ko', en:'side / beside', icon:'\u{1F449}' },
+          { jp:'\u3084\u3059\u307f', rm:'ya-su-mi', en:'rest / holiday', icon:'\u{1F3D6}\uFE0F' },
+          { jp:'\u3086\u3081', rm:'yu-me', en:'dream', icon:'\u{1F4AD}' },
+          { jp:'\u3088\u306a\u304b', rm:'yo-na-ka', en:'midnight', icon:'\u{1F319}' }
         ]
       }
     ]
   },
 
-  // ── LESSON 5: R-row + W-row + N ──
+  // ── Hiragana 5: R-row + W-row + N ──
   {
-    title: "Lesson 5",
+    title: "Hiragana 5",
     subtitle: "R-row, W-row & N",
     rows: [
       {
@@ -551,12 +721,12 @@ const LESSONS = [
           { ch:'\u308d', rm:'ro', pron:'Say a quick "roh" \u2014 like "road" without the -ad', strokes:['One stroke \u2014 horizontal then curving down and right'], tip:'\u308d looks like \u308b (ru) but without the bottom loop \u2014 flat ending!' }
         ],
         words: [
-          { jp:'\u3055\u304f\u3089', rm:'sa-ku-ra', en:'cherry blossom' },
-          { jp:'\u305d\u3089', rm:'so-ra', en:'sky' },
-          { jp:'\u304f\u308b\u307e', rm:'ku-ru-ma', en:'car' },
-          { jp:'\u3053\u3053\u308d', rm:'ko-ko-ro', en:'heart / mind' },
-          { jp:'\u3072\u308a', rm:'hi-ri', en:'chili pepper' },
-          { jp:'\u3044\u308d', rm:'i-ro', en:'color' }
+          { jp:'\u3055\u304f\u3089', rm:'sa-ku-ra', en:'cherry blossom', icon:'\u{1F338}' },
+          { jp:'\u305d\u3089', rm:'so-ra', en:'sky', icon:'\u{1F324}\uFE0F' },
+          { jp:'\u304f\u308b\u307e', rm:'ku-ru-ma', en:'car', icon:'\u{1F697}' },
+          { jp:'\u3053\u3053\u308d', rm:'ko-ko-ro', en:'heart / mind', icon:'\u{1F497}' },
+          { jp:'\u3072\u308a', rm:'hi-ri', en:'chili pepper', icon:'\u{1F336}\uFE0F' },
+          { jp:'\u3044\u308d', rm:'i-ro', en:'color', icon:'\u{1F308}' }
         ]
       },
       {
@@ -569,20 +739,20 @@ const LESSONS = [
           { ch:'\u3093', rm:'n', pron:'Say "n" \u2014 just the letter N, no vowel after it', strokes:['One flowing stroke \u2014 curve left, then sweep right and down'], tip:'\u3093 is the only character that\'s just a consonant with no vowel! Used in words like \u306b\u307b\u3093 (nihon = Japan).' }
         ],
         words: [
-          { jp:'\u308f\u305f\u3057', rm:'wa-ta-shi', en:'I / me' },
-          { jp:'\u306b\u307b\u3093', rm:'ni-ho-n', en:'Japan' },
-          { jp:'\u307f\u304b\u3093', rm:'mi-ka-n', en:'mandarin orange' },
-          { jp:'\u3057\u3093\u3075\u3093', rm:'shi-n-fu-n', en:'newspaper' },
-          { jp:'\u304a\u3093\u306a', rm:'o-n-na', en:'woman' },
-          { jp:'\u304a\u308f\u308a', rm:'o-wa-ri', en:'the end' }
+          { jp:'\u308f\u305f\u3057', rm:'wa-ta-shi', en:'I / me', icon:'\u{1F464}' },
+          { jp:'\u306b\u307b\u3093', rm:'ni-ho-n', en:'Japan', icon:'\u{1F1EF}\u{1F1F5}' },
+          { jp:'\u307f\u304b\u3093', rm:'mi-ka-n', en:'mandarin orange', icon:'\u{1F34A}' },
+          { jp:'\u3057\u3093\u3075\u3093', rm:'shi-n-fu-n', en:'newspaper', icon:'\u{1F4F0}' },
+          { jp:'\u304a\u3093\u306a', rm:'o-n-na', en:'woman', icon:'\u{1F469}' },
+          { jp:'\u304a\u308f\u308a', rm:'o-wa-ri', en:'the end', icon:'\u{1F3C1}' }
         ]
       }
     ]
   },
 
-  // ── LESSON 6: Dakuten Part 1 (G-row + Z-row) ──
+  // ── Hiragana 6: Dakuten Part 1 (G-row + Z-row) ──
   {
-    title: "Lesson 6",
+    title: "Hiragana 6",
     subtitle: "Dakuten Part 1: G-row & Z-row",
     rows: [
       {
@@ -597,12 +767,12 @@ const LESSONS = [
           { ch:'\u3054', rm:'go', pron:'Say "goh" \u2014 like "go" in English', strokes:['\u3053 (ko) + two small dots at the top-right'], tip:'\u3054 = \u3053 + dots. "Go" \u2014 same as English!' }
         ],
         words: [
-          { jp:'\u304c\u3063\u3053\u3046', rm:'ga-kko-u', en:'school' },
-          { jp:'\u304b\u304e', rm:'ka-gi', en:'key' },
-          { jp:'\u3044\u3061\u3054', rm:'i-chi-go', en:'strawberry' },
-          { jp:'\u305f\u307e\u3054', rm:'ta-ma-go', en:'egg' },
-          { jp:'\u3048\u3044\u3054', rm:'e-i-go', en:'English (language)' },
-          { jp:'\u304a\u306b\u304e\u308a', rm:'o-ni-gi-ri', en:'rice ball' }
+          { jp:'\u304c\u3063\u3053\u3046', rm:'ga-kko-u', en:'school', icon:'\u{1F3EB}' },
+          { jp:'\u304b\u304e', rm:'ka-gi', en:'key', icon:'\u{1F511}' },
+          { jp:'\u3044\u3061\u3054', rm:'i-chi-go', en:'strawberry', icon:'\u{1F353}' },
+          { jp:'\u305f\u307e\u3054', rm:'ta-ma-go', en:'egg', icon:'\u{1F95A}' },
+          { jp:'\u3048\u3044\u3054', rm:'e-i-go', en:'English (language)', icon:'\u{1F1EC}\u{1F1E7}' },
+          { jp:'\u304a\u306b\u304e\u308a', rm:'o-ni-gi-ri', en:'rice ball', icon:'\u{1F359}' }
         ]
       },
       {
@@ -617,20 +787,20 @@ const LESSONS = [
           { ch:'\u305e', rm:'zo', pron:'Say "zoh" \u2014 like "zone" without the -ne', strokes:['\u305d (so) + two small dots at the top-right'], tip:'\u305e = \u305d + dots. Think "zo"-ne!' }
         ],
         words: [
-          { jp:'\u304b\u305c', rm:'ka-ze', en:'wind / cold (illness)' },
-          { jp:'\u3058\u304b\u3093', rm:'ji-ka-n', en:'time' },
-          { jp:'\u307f\u305a', rm:'mi-zu', en:'water' },
-          { jp:'\u3059\u305a\u3057\u3044', rm:'su-zu-shi-i', en:'cool (weather)' },
-          { jp:'\u304b\u305e\u304f', rm:'ka-zo-ku', en:'family' },
-          { jp:'\u305c\u3093\u3076', rm:'ze-n-bu', en:'all / everything' }
+          { jp:'\u304b\u305c', rm:'ka-ze', en:'wind / cold (illness)', icon:'\u{1F32C}\uFE0F' },
+          { jp:'\u3058\u304b\u3093', rm:'ji-ka-n', en:'time', icon:'\u{1F552}' },
+          { jp:'\u307f\u305a', rm:'mi-zu', en:'water', icon:'\u{1F4A7}' },
+          { jp:'\u3059\u305a\u3057\u3044', rm:'su-zu-shi-i', en:'cool (weather)', icon:'\u{1F9CA}' },
+          { jp:'\u304b\u305e\u304f', rm:'ka-zo-ku', en:'family', icon:'\u{1F46A}' },
+          { jp:'\u305c\u3093\u3076', rm:'ze-n-bu', en:'all / everything', icon:'\u{1F30D}' }
         ]
       }
     ]
   },
 
-  // ── LESSON 7: Dakuten Part 2 (D-row + B-row) + Handakuten (P-row) ──
+  // ── Hiragana 7: Dakuten Part 2 (D-row + B-row) + Handakuten (P-row) ──
   {
-    title: "Lesson 7",
+    title: "Hiragana 7",
     subtitle: "D-row, B-row & P-row",
     rows: [
       {
@@ -645,12 +815,12 @@ const LESSONS = [
           { ch:'\u3069', rm:'do', pron:'Say "doh" \u2014 like "door"', strokes:['\u3068 (to) + two small dots at the top-right'], tip:'\u3069 = \u3068 + dots. Think "do"-or!' }
         ],
         words: [
-          { jp:'\u3060\u308c', rm:'da-re', en:'who?' },
-          { jp:'\u3067\u3093\u308f', rm:'de-n-wa', en:'telephone' },
-          { jp:'\u307e\u3069', rm:'ma-do', en:'window' },
-          { jp:'\u3044\u3064\u3067\u3082', rm:'i-tsu-de-mo', en:'anytime' },
-          { jp:'\u3069\u3053', rm:'do-ko', en:'where?' },
-          { jp:'\u3069\u3046\u305e', rm:'do-u-zo', en:'please (go ahead)' }
+          { jp:'\u3060\u308c', rm:'da-re', en:'who?', icon:'\u{1F914}' },
+          { jp:'\u3067\u3093\u308f', rm:'de-n-wa', en:'telephone', icon:'\u{1F4DE}' },
+          { jp:'\u307e\u3069', rm:'ma-do', en:'window', icon:'\u{1FA9F}' },
+          { jp:'\u3044\u3064\u3067\u3082', rm:'i-tsu-de-mo', en:'anytime', icon:'\u{1F552}' },
+          { jp:'\u3069\u3053', rm:'do-ko', en:'where?', icon:'\u{1F4CD}' },
+          { jp:'\u3069\u3046\u305e', rm:'do-u-zo', en:'please (go ahead)', icon:'\u{1F91A}' }
         ]
       },
       {
@@ -665,12 +835,12 @@ const LESSONS = [
           { ch:'\u307c', rm:'bo', pron:'Say "boh" \u2014 like "boat" without the -at', strokes:['\u307b (ho) + two small dots at the top-right'], tip:'\u307c = \u307b + dots. Think "bo"-at!' }
         ],
         words: [
-          { jp:'\u3070\u3057\u3087', rm:'ba-sho', en:'place' },
-          { jp:'\u3048\u3073', rm:'e-bi', en:'shrimp' },
-          { jp:'\u3076\u305f', rm:'bu-ta', en:'pig' },
-          { jp:'\u305f\u3079\u308b', rm:'ta-be-ru', en:'to eat' },
-          { jp:'\u307c\u3046\u3057', rm:'bo-u-shi', en:'hat' },
-          { jp:'\u3053\u3093\u3070\u3093\u306f', rm:'ko-n-ba-n-wa', en:'good evening' }
+          { jp:'\u3070\u3057\u3087', rm:'ba-sho', en:'place', icon:'\u{1F4CD}' },
+          { jp:'\u3048\u3073', rm:'e-bi', en:'shrimp', icon:'\u{1F990}' },
+          { jp:'\u3076\u305f', rm:'bu-ta', en:'pig', icon:'\u{1F437}' },
+          { jp:'\u305f\u3079\u308b', rm:'ta-be-ru', en:'to eat', icon:'\u{1F37D}\uFE0F' },
+          { jp:'\u307c\u3046\u3057', rm:'bo-u-shi', en:'hat', icon:'\u{1F3A9}' },
+          { jp:'\u3053\u3093\u3070\u3093\u306f', rm:'ko-n-ba-n-wa', en:'good evening', icon:'\u{1F303}' }
         ]
       },
       {
@@ -685,20 +855,20 @@ const LESSONS = [
           { ch:'\u307d', rm:'po', pron:'Say "poh" \u2014 like "post" without the -st', strokes:['\u307b (ho) + small circle at the top-right'], tip:'\u307d = \u307b + circle. Think "po"-st!' }
         ],
         words: [
-          { jp:'\u3071\u3093', rm:'pa-n', en:'bread' },
-          { jp:'\u3066\u3093\u3077\u3089', rm:'te-n-pu-ra', en:'tempura' },
-          { jp:'\u305b\u3093\u3071\u3044', rm:'se-n-pa-i', en:'senior (mentor)' },
-          { jp:'\u3057\u3093\u3071\u3044', rm:'shi-n-pa-i', en:'worry' },
-          { jp:'\u305f\u3093\u307d\u307d', rm:'ta-n-po-po', en:'dandelion' },
-          { jp:'\u3044\u3063\u3071\u3044', rm:'i-ppa-i', en:'full / a lot' }
+          { jp:'\u3071\u3093', rm:'pa-n', en:'bread', icon:'\u{1F35E}' },
+          { jp:'\u3066\u3093\u3077\u3089', rm:'te-n-pu-ra', en:'tempura', icon:'\u{1F364}' },
+          { jp:'\u305b\u3093\u3071\u3044', rm:'se-n-pa-i', en:'senior (mentor)', icon:'\u{1F9D1}\u200D\u{1F3EB}' },
+          { jp:'\u3057\u3093\u3071\u3044', rm:'shi-n-pa-i', en:'worry', icon:'\u{1F630}' },
+          { jp:'\u305f\u3093\u307d\u307d', rm:'ta-n-po-po', en:'dandelion', icon:'\u{1F33C}' },
+          { jp:'\u3044\u3063\u3071\u3044', rm:'i-ppa-i', en:'full / a lot', icon:'\u{1F4AF}' }
         ]
       }
     ]
   },
 
-  // ── LESSON 8: Yōon (Combination Sounds) ──
+  // ── Hiragana 8: Yōon (Combination Sounds) ──
   {
-    title: "Lesson 8",
+    title: "Hiragana 8",
     subtitle: "Y\u014don: Combination Sounds",
     rows: [
       {
@@ -711,12 +881,12 @@ const LESSONS = [
           { ch:'\u304d\u3087', rm:'kyo', pron:'Say "kyoh" \u2014 one syllable', strokes:['\u304d (ki) + small \u3088 (yo) written smaller next to it'], tip:'Ky\u014dto (\u304d\u3087\u3046\u3068) the city name starts with \u304d\u3087!' }
         ],
         words: [
-          { jp:'\u304d\u3083\u304f', rm:'kya-ku', en:'guest / customer' },
-          { jp:'\u304e\u3085\u3046\u306b\u3085\u3046', rm:'gyu-u-ni-u', en:'milk' },
-          { jp:'\u304d\u3087\u3046', rm:'kyo-u', en:'today' },
-          { jp:'\u304e\u3087\u3046\u3056', rm:'gyo-u-za', en:'gyoza (dumplings)' },
-          { jp:'\u304d\u3085\u3046\u304b', rm:'kyu-u-ka', en:'vacation' },
-          { jp:'\u304d\u3083\u3079\u3064', rm:'kya-be-tsu', en:'cabbage' }
+          { jp:'\u304d\u3083\u304f', rm:'kya-ku', en:'guest / customer', icon:'\u{1F9D1}\u200D\u{1F4BC}' },
+          { jp:'\u304e\u3085\u3046\u306b\u3085\u3046', rm:'gyu-u-ni-u', en:'milk', icon:'\u{1F95B}' },
+          { jp:'\u304d\u3087\u3046', rm:'kyo-u', en:'today', icon:'\u{1F4C5}' },
+          { jp:'\u304e\u3087\u3046\u3056', rm:'gyo-u-za', en:'gyoza (dumplings)', icon:'\u{1F95F}' },
+          { jp:'\u304d\u3085\u3046\u304b', rm:'kyu-u-ka', en:'vacation', icon:'\u{1F3D6}\uFE0F' },
+          { jp:'\u304d\u3083\u3079\u3064', rm:'kya-be-tsu', en:'cabbage', icon:'\u{1F966}' }
         ]
       },
       {
@@ -732,12 +902,12 @@ const LESSONS = [
           { ch:'\u3061\u3087', rm:'cho', pron:'Say "choh" \u2014 like "chocolate" without the -colate', strokes:['\u3061 (chi) + small \u3088 (yo)'], tip:'\u3061\u3087\u3053\u308c\u3044\u3068 means "chocolate" \u2014 choko-re-i-to!' }
         ],
         words: [
-          { jp:'\u304a\u3061\u3083', rm:'o-cha', en:'tea' },
-          { jp:'\u3057\u3083\u3057\u3093', rm:'sha-shi-n', en:'photo' },
-          { jp:'\u3061\u3085\u3046\u3057\u3083', rm:'chu-u-sha', en:'parking' },
-          { jp:'\u3057\u3087\u304f\u3058', rm:'sho-ku-ji', en:'meal' },
-          { jp:'\u3061\u3087\u3063\u3068', rm:'cho-tto', en:'a little / wait' },
-          { jp:'\u3058\u3083\u3042\u306d', rm:'ja-a-ne', en:'see you!' }
+          { jp:'\u304a\u3061\u3083', rm:'o-cha', en:'tea', icon:'\u{1F375}' },
+          { jp:'\u3057\u3083\u3057\u3093', rm:'sha-shi-n', en:'photo', icon:'\u{1F4F7}' },
+          { jp:'\u3061\u3085\u3046\u3057\u3083', rm:'chu-u-sha', en:'parking', icon:'\u{1F17F}\uFE0F' },
+          { jp:'\u3057\u3087\u304f\u3058', rm:'sho-ku-ji', en:'meal', icon:'\u{1F37D}\uFE0F' },
+          { jp:'\u3061\u3087\u3063\u3068', rm:'cho-tto', en:'a little / wait', icon:'\u270B' },
+          { jp:'\u3058\u3083\u3042\u306d', rm:'ja-a-ne', en:'see you!', icon:'\u{1F44B}' }
         ]
       },
       {
@@ -753,15 +923,289 @@ const LESSONS = [
           { ch:'\u3074\u3083', rm:'pya', pron:'Say "pyah" \u2014 quick popping sound', strokes:['\u3074 (pi) + small \u3083 (ya)'], tip:'\u3074\u3085 and \u3074\u3087 are rare but \u3074\u3083 appears in some words.' }
         ],
         words: [
-          { jp:'\u3072\u3083\u304f', rm:'hya-ku', en:'100 (one hundred)' },
-          { jp:'\u3073\u3087\u3046\u3044\u3093', rm:'byo-u-i-n', en:'hospital' },
-          { jp:'\u308a\u3085\u3046', rm:'ryu-u', en:'dragon' },
-          { jp:'\u306b\u3085\u3046\u3059', rm:'nyu-u-su', en:'news' },
-          { jp:'\u3058\u3085\u3046\u3057\u3087', rm:'ju-u-sho', en:'address' },
-          { jp:'\u3055\u3093\u3073\u3083\u304f', rm:'sa-n-bya-ku', en:'300 (three hundred)' }
+          { jp:'\u3072\u3083\u304f', rm:'hya-ku', en:'100 (one hundred)', icon:'\u{1F4AF}' },
+          { jp:'\u3073\u3087\u3046\u3044\u3093', rm:'byo-u-i-n', en:'hospital', icon:'\u{1F3E5}' },
+          { jp:'\u308a\u3085\u3046', rm:'ryu-u', en:'dragon', icon:'\u{1F409}' },
+          { jp:'\u306b\u3085\u3046\u3059', rm:'nyu-u-su', en:'news', icon:'\u{1F4F0}' },
+          { jp:'\u3058\u3085\u3046\u3057\u3087', rm:'ju-u-sho', en:'address', icon:'\u{1F4EC}' },
+          { jp:'\u3055\u3093\u3073\u3083\u304f', rm:'sa-n-bya-ku', en:'300 (three hundred)', icon:'\u{1F522}' }
         ]
       }
     ]
+  },
+
+  // ── Numbers: Counting in Japanese ──
+  {
+    title: "Numbers",
+    subtitle: "Counting in Japanese",
+    type: "genki",
+    rows: [
+      {
+        name: "Numbers 1-10",
+        vocab: [
+          { jp: 'いち', rm: 'ichi', en: '1', icon: '1️⃣' },
+          { jp: 'に', rm: 'ni', en: '2', icon: '2️⃣' },
+          { jp: 'さん', rm: 'san', en: '3', icon: '3️⃣' },
+          { jp: 'し / よん', rm: 'shi / yon', en: '4', icon: '4️⃣' },
+          { jp: 'ご', rm: 'go', en: '5', icon: '5️⃣' },
+          { jp: 'ろく', rm: 'roku', en: '6', icon: '6️⃣' },
+          { jp: 'しち / なな', rm: 'shichi / nana', en: '7', icon: '7️⃣' },
+          { jp: 'はち', rm: 'hachi', en: '8', icon: '8️⃣' },
+          { jp: 'きゅう / く', rm: 'kyuu / ku', en: '9', icon: '9️⃣' },
+          { jp: 'じゅう', rm: 'juu', en: '10', icon: '🔟' }
+        ]
+      },
+      {
+        name: "Numbers 11-100",
+        vocab: [
+          { jp: 'じゅういち', rm: 'juu-ichi', en: '11', icon: '1️⃣1️⃣' },
+          { jp: 'じゅうに', rm: 'juu-ni', en: '12', icon: '1️⃣2️⃣' },
+          { jp: 'にじゅう', rm: 'ni-juu', en: '20', icon: '2️⃣0️⃣' },
+          { jp: 'さんじゅう', rm: 'san-juu', en: '30', icon: '3️⃣0️⃣' },
+          { jp: 'よんじゅう', rm: 'yon-juu', en: '40', icon: '4️⃣0️⃣' },
+          { jp: 'ごじゅう', rm: 'go-juu', en: '50', icon: '5️⃣0️⃣' },
+          { jp: 'ろくじゅう', rm: 'roku-juu', en: '60', icon: '6️⃣0️⃣' },
+          { jp: 'ななじゅう', rm: 'nana-juu', en: '70', icon: '7️⃣0️⃣' },
+          { jp: 'はちじゅう', rm: 'hachi-juu', en: '80', icon: '8️⃣0️⃣' },
+          { jp: 'きゅうじゅう', rm: 'kyuu-juu', en: '90', icon: '9️⃣0️⃣' },
+          { jp: 'ひゃく', rm: 'hyaku', en: '100', icon: '💯' }
+        ]
+      },
+      {
+        name: "Useful Number Words",
+        vocab: [
+          { jp: 'ゼロ / れい', rm: 'zero / rei', en: 'zero', icon: '0️⃣' },
+          { jp: 'せん', rm: 'sen', en: '1,000', icon: '🔢' },
+          { jp: 'まん', rm: 'man', en: '10,000', icon: '🔢' },
+          { jp: 'いくら', rm: 'ikura', en: 'how much?', icon: '💰' },
+          { jp: 'ばんごう', rm: 'bangou', en: 'number', icon: '#️⃣' }
+        ]
+      }
+    ],
+    quiz: {
+      type: 'mixed',
+      items: [
+        { q: '3', a: 'さん', options: ['さん', 'し', 'ご', 'に'] },
+        { q: '7', a: 'しち / なな', options: ['しち / なな', 'ろく', 'はち', 'きゅう / く'] },
+        { q: '10', a: 'じゅう', options: ['じゅう', 'きゅう / く', 'はち', 'ひゃく'] },
+        { q: '20', a: 'にじゅう', options: ['にじゅう', 'じゅうに', 'さんじゅう', 'にひゃく'] },
+        { q: '50', a: 'ごじゅう', options: ['ごじゅう', 'ごひゃく', 'よんじゅう', 'ろくじゅう'] },
+        { q: '100', a: 'ひゃく', options: ['ひゃく', 'じゅう', 'せん', 'まん'] },
+        { q: 'how much?', a: 'いくら', options: ['いくら', 'ばんごう', 'ゼロ / れい', 'まん'] },
+        { q: '4', a: 'し / よん', options: ['し / よん', 'しち / なな', 'ろく', 'ご'] }
+      ]
+    }
+  },
+
+  // ── Lesson 1: Genki Chapter 1 — Greetings, Self-Introduction, Grammar & Vocabulary ──
+  {
+    title: "Lesson 1",
+    subtitle: "Greetings, Grammar & Vocabulary",
+    type: "genki",
+    rows: [
+      {
+        name: "Daily Greetings",
+        phrases: [
+          { jp: 'おはようございます', rm: 'ohayou gozaimasu', en: 'Good morning (polite)', icon: '\u{1F305}', context: 'Use with coworkers, neighbors, strangers', casual: 'おはよう (ohayou) — with friends & family' },
+          { jp: 'こんにちは', rm: 'konnichiwa', en: 'Hello / Good afternoon', icon: '\u{1F44B}', context: 'General greeting during daytime', casual: null },
+          { jp: 'こんばんは', rm: 'konbanwa', en: 'Good evening', icon: '\u{1F303}', context: 'Greeting after sunset', casual: null },
+          { jp: 'さようなら', rm: 'sayounara', en: 'Goodbye', icon: '\u{1F44B}', context: 'Formal — implies you won\'t see them for a while', casual: 'じゃあね (jaa ne) or バイバイ (baibai) — casual goodbye' },
+          { jp: 'おやすみなさい', rm: 'oyasuminasai', en: 'Good night', icon: '\u{1F319}', context: 'Said before going to bed or leaving at night', casual: 'おやすみ (oyasumi) — casual' },
+          { jp: 'ありがとうございます', rm: 'arigatou gozaimasu', en: 'Thank you (polite)', icon: '\u{1F64F}', context: 'Use in shops, with strangers, at work', casual: 'ありがとう (arigatou) — casual thanks' },
+          { jp: 'すみません', rm: 'sumimasen', en: 'Excuse me / I\'m sorry', icon: '\u{1F647}', context: 'Getting attention, apologizing, or thanking', casual: 'ごめん (gomen) — casual sorry' },
+          { jp: 'いいえ', rm: 'iie', en: 'No / Not at all / You\'re welcome', icon: '\u{274C}', context: 'Response to thanks or a question', casual: 'ううん (uun) — casual no' }
+        ]
+      },
+      {
+        name: "Home & Mealtime",
+        phrases: [
+          { jp: 'いってきます', rm: 'ittekimasu', en: 'I\'m heading out', icon: '\u{1F6B6}', context: 'Said when leaving home', casual: null },
+          { jp: 'いってらっしゃい', rm: 'itterasshai', en: 'See you later / Take care', icon: '\u{1F3E0}', context: 'Response to いってきます — said by the person staying', casual: null },
+          { jp: 'ただいま', rm: 'tadaima', en: 'I\'m home', icon: '\u{1F3E1}', context: 'Said when arriving home', casual: null },
+          { jp: 'おかえりなさい', rm: 'okaerinasai', en: 'Welcome home', icon: '\u{1F917}', context: 'Response to ただいま', casual: 'おかえり (okaeri) — casual' },
+          { jp: 'いただきます', rm: 'itadakimasu', en: 'Let\'s eat (lit. I humbly receive)', icon: '\u{1F37D}\uFE0F', context: 'Said before eating — shows gratitude for the food', casual: null },
+          { jp: 'ごちそうさまでした', rm: 'gochisousama deshita', en: 'Thank you for the meal', icon: '\u{1F60B}', context: 'Said after eating — at home or in restaurants', casual: 'ごちそうさま (gochisousama) — casual' }
+        ]
+      },
+      {
+        name: "Meeting People",
+        phrases: [
+          { jp: 'はじめまして', rm: 'hajimemashite', en: 'Nice to meet you (first time)', icon: '\u{1F91D}', context: 'Always said when meeting someone new', casual: null },
+          { jp: 'わたしは〜です', rm: 'watashi wa ~ desu', en: 'I am ~', icon: '\u{1F464}', context: 'Basic self-introduction pattern', casual: null },
+          { jp: '〜さん', rm: '~ san', en: 'Mr. / Ms. / Mrs. ~', icon: '\u{1F465}', context: 'Polite name suffix — never use for yourself', casual: null },
+          { jp: 'よろしくおねがいします', rm: 'yoroshiku onegaishimasu', en: 'Please treat me well / Nice to meet you', icon: '\u{1F647}', context: 'Said at the end of a self-introduction', casual: 'よろしく (yoroshiku) — casual' }
+        ]
+      },
+      {
+        name: "X は Y です",
+        grammar: [
+          {
+            pattern: 'X <span class="gp-particle">は</span> Y <span class="gp-copula">です</span>',
+            meaning: 'X is Y',
+            breakdown: [
+              { part: 'X', role: 'Topic (what you\'re talking about)' },
+              { part: 'は', role: 'Topic marker (pronounced "wa")' },
+              { part: 'Y', role: 'Description / identity' },
+              { part: 'です', role: '"is" (polite)' }
+            ],
+            examples: [
+              { jp: 'わたしは たなかです。', en: 'I am Tanaka.' },
+              { jp: 'やまださんは いしゃです。', en: 'Mr. Yamada is a doctor.' },
+              { jp: 'これは コーヒーです。', en: 'This is coffee.' }
+            ]
+          }
+        ]
+      },
+      {
+        name: "X は Y じゃないです",
+        grammar: [
+          {
+            pattern: 'X <span class="gp-particle">は</span> Y <span class="gp-copula">じゃないです</span>',
+            meaning: 'X is not Y (negative)',
+            breakdown: [
+              { part: 'X は', role: 'Topic' },
+              { part: 'Y', role: 'What it is NOT' },
+              { part: 'じゃないです', role: '"is not" (polite)' }
+            ],
+            examples: [
+              { jp: 'わたしは いしゃじゃないです。', en: 'I am not a doctor.' },
+              { jp: 'これは おちゃじゃないです。', en: 'This is not tea.' },
+              { jp: 'たなかさんは エンジニアじゃないです。', en: 'Mr. Tanaka is not an engineer.' }
+            ]
+          }
+        ]
+      },
+      {
+        name: "か (Questions) and の (Possession)",
+        grammar: [
+          {
+            pattern: 'X は Y です<span class="gp-particle">か</span>',
+            meaning: 'Is X Y? (question)',
+            breakdown: [
+              { part: 'か', role: 'Question marker — just add it to the end!' }
+            ],
+            examples: [
+              { jp: 'たなかさんは かいしゃいんですか。', en: 'Is Mr. Tanaka an office worker?' },
+              { jp: 'これは おちゃですか。', en: 'Is this tea?' }
+            ]
+          },
+          {
+            pattern: 'A <span class="gp-particle">の</span> B',
+            meaning: 'A\'s B / B of A (possession)',
+            breakdown: [
+              { part: 'A', role: 'Owner / Source' },
+              { part: 'の', role: '\'s (possession marker)' },
+              { part: 'B', role: 'Thing owned' }
+            ],
+            examples: [
+              { jp: 'わたしの でんわばんごう', en: 'My phone number' },
+              { jp: 'やまださんの かいしゃ', en: 'Mr. Yamada\'s company' }
+            ]
+          }
+        ]
+      },
+      {
+        name: "People & Jobs",
+        vocab: [
+          { jp: 'かいしゃいん', rm: 'kaishain', en: 'office worker', icon: '\u{1F4BC}' },
+          { jp: 'いしゃ', rm: 'isha', en: 'doctor', icon: '\u{1FA7A}' },
+          { jp: 'エンジニア', rm: 'enjinia', en: 'engineer', icon: '\u{1F4BB}' },
+          { jp: 'かんごし', rm: 'kangoshi', en: 'nurse', icon: '\u{1F3E5}' },
+          { jp: 'きょうし', rm: 'kyoushi', en: 'teacher', icon: '\u{1F4DA}' },
+          { jp: 'べんごし', rm: 'bengoshi', en: 'lawyer', icon: '\u{2696}\uFE0F' },
+          { jp: 'しゅふ', rm: 'shufu', en: 'homemaker', icon: '\u{1F3E0}' },
+          { jp: 'てんいん', rm: 'ten\'in', en: 'shop clerk', icon: '\u{1F6D2}' }
+        ]
+      },
+      {
+        name: "Countries & Daily Words",
+        vocab: [
+          { jp: 'にほん', rm: 'nihon', en: 'Japan', icon: '\u{1F1EF}\u{1F1F5}' },
+          { jp: 'アメリカ', rm: 'amerika', en: 'America', icon: '\u{1F1FA}\u{1F1F8}' },
+          { jp: 'イギリス', rm: 'igirisu', en: 'England / UK', icon: '\u{1F1EC}\u{1F1E7}' },
+          { jp: 'かんこく', rm: 'kankoku', en: 'South Korea', icon: '\u{1F1F0}\u{1F1F7}' },
+          { jp: 'ちゅうごく', rm: 'chuugoku', en: 'China', icon: '\u{1F1E8}\u{1F1F3}' },
+          { jp: 'でんわばんごう', rm: 'denwa bangou', en: 'phone number', icon: '\u{1F4DE}' },
+          { jp: 'おなまえ', rm: 'onamae', en: 'name (polite)', icon: '\u{1F4DB}' },
+          { jp: 'しごと', rm: 'shigoto', en: 'job / work', icon: '\u{1F4BC}' },
+          { jp: 'かいしゃ', rm: 'kaisha', en: 'company', icon: '\u{1F3E2}' },
+          { jp: 'おとなり', rm: 'otonari', en: 'neighbor / next door', icon: '\u{1F3E1}' }
+        ]
+      },
+      {
+        name: "Meeting a Neighbor",
+        dialogue: [
+          { speaker: 'You', jp: 'すみません、おとなりの たなかです。はじめまして。', en: 'Excuse me, I\'m Tanaka from next door. Nice to meet you.' },
+          { speaker: 'Neighbor', jp: 'ああ、はじめまして。やまだです。', en: 'Oh, nice to meet you. I\'m Yamada.' },
+          { speaker: 'You', jp: 'おしごとは なんですか。', en: 'What is your job?' },
+          { speaker: 'Neighbor', jp: 'エンジニアです。たなかさんは？', en: 'I\'m an engineer. And you, Tanaka-san?' },
+          { speaker: 'You', jp: 'わたしは かいしゃいんです。', en: 'I\'m an office worker.' },
+          { speaker: 'Neighbor', jp: 'そうですか。よろしくおねがいします。', en: 'I see. Nice to meet you.' },
+          { speaker: 'You', jp: 'よろしくおねがいします。', en: 'Nice to meet you too.' }
+        ]
+      },
+      {
+        name: "Telling Time",
+        vocab: [
+          { jp: 'いちじ', rm: 'ichi-ji', en: '1:00', icon: '🕐' },
+          { jp: 'にじ', rm: 'ni-ji', en: '2:00', icon: '🕑' },
+          { jp: 'さんじ', rm: 'san-ji', en: '3:00', icon: '🕒' },
+          { jp: 'よじ', rm: 'yo-ji', en: '4:00 (NOT よんじ!)', icon: '🕓' },
+          { jp: 'ごじ', rm: 'go-ji', en: '5:00', icon: '🕔' },
+          { jp: 'ろくじ', rm: 'roku-ji', en: '6:00', icon: '🕕' },
+          { jp: 'しちじ', rm: 'shichi-ji', en: '7:00', icon: '🕖' },
+          { jp: 'はちじ', rm: 'hachi-ji', en: '8:00', icon: '🕗' },
+          { jp: 'くじ', rm: 'ku-ji', en: '9:00 (NOT きゅうじ!)', icon: '🕘' },
+          { jp: 'じゅうじ', rm: 'juu-ji', en: '10:00', icon: '🕙' },
+          { jp: 'じゅういちじ', rm: 'juu-ichi-ji', en: '11:00', icon: '🕚' },
+          { jp: 'じゅうにじ', rm: 'juu-ni-ji', en: '12:00', icon: '🕛' },
+          { jp: 'なんじ', rm: 'nan-ji', en: 'what time?', icon: '⏰' },
+          { jp: 'はん', rm: 'han', en: 'half past', icon: '🕐' },
+          { jp: 'ごぜん', rm: 'gozen', en: 'AM', icon: '🌅' },
+          { jp: 'ごご', rm: 'gogo', en: 'PM', icon: '🌇' }
+        ]
+      },
+      {
+        name: "Talking About Age",
+        vocab: [
+          { jp: 'いっさい', rm: 'issai', en: '1 year old', icon: '👶' },
+          { jp: 'にさい', rm: 'ni-sai', en: '2 years old', icon: '👶' },
+          { jp: 'さんさい', rm: 'san-sai', en: '3 years old', icon: '🧒' },
+          { jp: 'よんさい', rm: 'yon-sai', en: '4 years old', icon: '🧒' },
+          { jp: 'ごさい', rm: 'go-sai', en: '5 years old', icon: '🧒' },
+          { jp: 'ろくさい', rm: 'roku-sai', en: '6 years old', icon: '🧒' },
+          { jp: 'ななさい', rm: 'nana-sai', en: '7 years old', icon: '🧒' },
+          { jp: 'はっさい', rm: 'hassai', en: '8 years old (sound change!)', icon: '🧑' },
+          { jp: 'きゅうさい', rm: 'kyuu-sai', en: '9 years old', icon: '🧑' },
+          { jp: 'じゅっさい', rm: 'jussai', en: '10 years old (sound change!)', icon: '🧑' },
+          { jp: 'にじゅっさい', rm: 'ni-jussai', en: '20 years old', icon: '🧑' },
+          { jp: 'はたち', rm: 'hatachi', en: '20 years old (special word!)', icon: '🎉' },
+          { jp: 'なんさい', rm: 'nan-sai', en: 'how old?', icon: '❓' },
+          { jp: 'おいくつ', rm: 'o-ikutsu', en: 'how old? (polite)', icon: '🙏' }
+        ]
+      }
+    ],
+    quiz: {
+      type: 'mixed',
+      items: [
+        { q: 'Good morning (polite)', a: 'おはようございます', options: ['おはようございます', 'こんにちは', 'こんばんは', 'おやすみなさい'] },
+        { q: 'Thank you (polite)', a: 'ありがとうございます', options: ['すみません', 'ありがとうございます', 'いいえ', 'さようなら'] },
+        { q: 'I\'m home', a: 'ただいま', options: ['いってきます', 'ただいま', 'おかえりなさい', 'いただきます'] },
+        { q: 'Excuse me / I\'m sorry', a: 'すみません', options: ['いいえ', 'さようなら', 'すみません', 'ありがとうございます'] },
+        { q: '"I am Suzuki." — Which is correct?', a: 'わたしは すずきです。', options: ['わたしは すずきです。', 'わたしの すずきです。', 'わたしか すずきです。', 'すずきは わたしです。'] },
+        { q: '"Is this coffee?" — Which is correct?', a: 'これは コーヒーですか。', options: ['これは コーヒーですか。', 'これは コーヒーです。', 'これの コーヒーですか。', 'これは コーヒーじゃないです。'] },
+        { q: '"I am not a doctor." — Which is correct?', a: 'わたしは いしゃじゃないです。', options: ['わたしは いしゃです。', 'わたしは いしゃじゃないです。', 'わたしの いしゃです。', 'わたしは いしゃですか。'] },
+        { q: 'What does か do at the end of a sentence?', a: 'Makes it a question', options: ['Makes it negative', 'Makes it a question', 'Marks the topic', 'Shows possession'] },
+        { q: 'doctor', a: 'いしゃ', options: ['いしゃ', 'かいしゃいん', 'きょうし', 'べんごし'] },
+        { q: 'office worker', a: 'かいしゃいん', options: ['エンジニア', 'てんいん', 'かいしゃいん', 'かんごし'] },
+        { q: 'Japan', a: 'にほん', options: ['にほん', 'アメリカ', 'かんこく', 'ちゅうごく'] },
+        { q: 'phone number', a: 'でんわばんごう', options: ['おなまえ', 'でんわばんごう', 'しごと', 'かいしゃ'] },
+        { q: '4:00 — be careful!', a: 'よじ', options: ['よじ', 'よんじ', 'しじ', 'ごじ'] },
+        { q: '9:00 — be careful!', a: 'くじ', options: ['くじ', 'きゅうじ', 'はちじ', 'じゅうじ'] },
+        { q: 'what time?', a: 'なんじ', options: ['なんじ', 'なんさい', 'いくら', 'いつ'] },
+        { q: '20 years old (special word)', a: 'はたち', options: ['はたち', 'にじゅっさい', 'にじゅう', 'にさい'] }
+      ]
+    }
   }
 ];
 
@@ -769,18 +1213,46 @@ const LESSONS = [
 //  BUILD MENU
 // ============================================================
 function buildMenu() {
-  const grid = document.getElementById('lessonGrid');
-  LESSONS.forEach((lesson, i) => {
-    const allChars = lesson.rows.flatMap(r => r.chars.map(c => c.ch)).join('');
-    const card = document.createElement('div');
-    card.className = 'lesson-card';
-    card.innerHTML = `
-      <div class="lnum">${lesson.title}</div>
-      <div class="lchars">${allChars}</div>
-      <div class="ldesc">${lesson.subtitle}</div>
-    `;
-    card.onclick = () => startLesson(i);
-    grid.appendChild(card);
+  const container = document.getElementById('lessonGrid');
+  const categories = [
+    { label: 'Basic Hiragana', range: [0, 5] },
+    { label: 'Dakuten & Handakuten', range: [5, 7] },
+    { label: 'Combinations', range: [7, 8] },
+    { label: 'Numbers & Counting', range: [8, 9] },
+    { label: 'Japanese Basics (Genki 1)', range: [9, 10] }
+  ];
+
+  categories.forEach(cat => {
+    const heading = document.createElement('h2');
+    heading.className = 'section-heading';
+    heading.textContent = cat.label;
+    container.appendChild(heading);
+
+    const grid = document.createElement('div');
+    grid.className = 'lesson-grid';
+    container.appendChild(grid);
+
+    for (let i = cat.range[0]; i < cat.range[1]; i++) {
+      const lesson = LESSONS[i];
+      const isGenki = lesson.type === 'genki';
+      let preview = '';
+      if (isGenki) {
+        // For Genki lessons, show first row name as preview
+        preview = lesson.rows[0].name;
+      } else {
+        const chars = lesson.rows.flatMap(r => r.chars.map(c => c.ch));
+        preview = chars.slice(0, 3).join(' ') + (chars.length > 3 ? ' ...' : '');
+      }
+      const card = document.createElement('div');
+      card.className = 'lesson-card' + (isGenki ? ' genki' : '');
+      card.innerHTML = `
+        <div class="lnum">${lesson.title}</div>
+        <div class="lchars">${preview}</div>
+        <div class="ldesc">${lesson.subtitle}</div>
+      `;
+      card.onclick = () => startLesson(i);
+      grid.appendChild(card);
+    }
   });
 }
 
@@ -803,9 +1275,21 @@ function startLesson(lessonIdx) {
   allSlides = [];
   quizStarted = false;
 
-  // Collect all romaji options for quizzes
-  const allRomaji = lesson.rows.flatMap(r => r.chars.map(c => c.rm));
+  if (lesson.type === 'genki') {
+    buildGenkiSlides(lesson);
+  } else {
+    buildHiraganaSlides(lesson);
+  }
 
+  // Show slideshow
+  document.getElementById('menu').style.display = 'none';
+  document.getElementById('slideshow').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  currentSlide = 0;
+  showSlide(0);
+}
+
+function buildHiraganaSlides(lesson) {
   // Slide 1: Title
   addSlide(`
     <h1>${lesson.title}</h1>
@@ -859,6 +1343,7 @@ function startLesson(lessonIdx) {
     // Practice words
     const wordCards = row.words.map(w => `
       <div class="word-card">
+        ${w.icon ? '<div style="font-size:2em; margin-bottom:4px;">' + w.icon + '</div>' : ''}
         <div class="jp">${w.jp}</div>
         <div class="rm">${w.rm}</div>
         <div class="en">${w.en}</div>
@@ -898,19 +1383,157 @@ function startLesson(lessonIdx) {
     <div class="char-row">${allCharBoxes}</div>
     <p style="color:#aaa; margin-top:28px;">Practice writing each one 10 times!</p>
   `);
-
-  // Show slideshow
-  document.getElementById('menu').style.display = 'none';
-  document.getElementById('slideshow').style.display = 'block';
-  currentSlide = 0;
-  showSlide(0);
 }
 
-function addSlide(html, isQuiz) {
+function buildGenkiSlides(lesson) {
+  // Title slide
+  addSlide(`
+    <h1>${lesson.title}</h1>
+    <p class="subtitle">${lesson.subtitle}</p>
+    <p style="color:#aaa; margin-top:30px;">Use arrow keys or buttons to navigate</p>
+  `);
+
+  // Build slides for each row based on content type
+  lesson.rows.forEach(row => {
+    if (row.phrases) {
+      // Phrase overview slide
+      const phraseCards = row.phrases.map(p => `
+        <div class="word-card">
+          ${p.icon ? '<div style="font-size:2em; margin-bottom:4px;">' + p.icon + '</div>' : ''}
+          <div class="jp" style="font-size:1.6em;">${p.jp}</div>
+          <div class="rm" style="color:#2d8cf0;">${p.rm}</div>
+          <div class="en">${p.en}</div>
+          ${p.context ? '<div class="context">' + p.context + '</div>' : ''}
+        </div>
+      `).join('');
+
+      addSlide(`
+        <h2>${row.name}</h2>
+        <div class="word-grid">${phraseCards}</div>
+      `);
+
+      // Individual phrase detail slides
+      row.phrases.forEach(p => {
+        addSlide(`
+          <div class="phrase-detail">
+            ${p.icon ? '<div style="font-size:3.5em; margin-bottom:8px;">' + p.icon + '</div>' : ''}
+            <div class="phrase-jp">${p.jp}</div>
+            <div class="phrase-rm">${p.rm}</div>
+            <div class="phrase-en">${p.en}</div>
+            <div class="phrase-context">${p.context || ''}</div>
+            ${p.casual ? '<div class="phrase-casual">Casual: <span>' + p.casual + '</span></div>' : ''}
+          </div>
+        `);
+      });
+    }
+
+    if (row.grammar) {
+      row.grammar.forEach(g => {
+        // Grammar pattern slide
+        const breakdownHtml = g.breakdown.map(b => `
+          <div class="breakdown-item">
+            <div class="part">${b.part}</div>
+            <div class="role">${b.role}</div>
+          </div>
+        `).join('');
+
+        const examplesHtml = g.examples.map(ex => `
+          <div class="example-sentence">
+            <div class="jp-line">${ex.jp}</div>
+            <div class="en-line">${ex.en}</div>
+          </div>
+        `).join('');
+
+        addSlide(`
+          <h2>${row.name}</h2>
+          <div class="grammar-pattern">${g.pattern}</div>
+          <p style="font-size:1.2em; color:#666; margin-bottom:16px;">${g.meaning}</p>
+          <div class="grammar-breakdown">${breakdownHtml}</div>
+        `);
+
+        // Examples slide
+        addSlide(`
+          <h2>Examples: ${g.meaning}</h2>
+          ${examplesHtml}
+        `);
+      });
+    }
+
+    if (row.vocab) {
+      const vocabCards = row.vocab.map(v => `
+        <div class="word-card">
+          ${v.icon ? '<div style="font-size:2em; margin-bottom:4px;">' + v.icon + '</div>' : ''}
+          <div class="jp">${v.jp}</div>
+          <div class="rm" style="color:#2d8cf0;">${v.rm}</div>
+          <div class="en">${v.en}</div>
+        </div>
+      `).join('');
+
+      addSlide(`
+        <h2>${row.name}</h2>
+        <div class="word-grid">${vocabCards}</div>
+      `);
+    }
+
+    if (row.dialogue) {
+      const lines = row.dialogue.map((d, i) => {
+        const side = i % 2 === 0 ? 'left' : 'right';
+        return `
+          <div class="dialogue-line ${side}">
+            <div class="speaker-name">${d.speaker}</div>
+            <div class="dialogue-bubble">
+              <div class="jp-text">${d.jp}</div>
+              <div class="en-text">${d.en}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      addSlide(`
+        <h2>${row.name}</h2>
+        <div class="dialogue-container">${lines}</div>
+      `);
+    }
+  });
+
+  // Genki quiz slide
+  if (lesson.quiz) {
+    genkiQuizData = lesson.quiz.items.map(item => ({
+      question: item.q,
+      answer: item.a,
+      options: [...item.options]
+    }));
+    quizData = genkiQuizData;
+
+    addSlide(`
+      <h2>Quiz Time!</h2>
+      <div class="quiz-area">
+        <div class="quiz-question" id="qq-question"></div>
+        <div class="quiz-text" id="qq-char"></div>
+        <div class="quiz-options" id="qq-options"></div>
+        <div class="quiz-feedback" id="qq-feedback"></div>
+        <p style="color:#aaa; margin-top:14px; font-size:0.9em;" id="qq-progress"></p>
+      </div>
+    `, true, 'genki');
+
+    // Score slide
+    addSlide(`
+      <h2>Your Score</h2>
+      <div class="score-display" id="final-score">-</div>
+      <p id="score-message" style="font-size:1.25em; margin-bottom:24px; color:#555;"></p>
+      <p style="color:#aaa; margin-top:28px;">Great work! Review any items you missed.</p>
+    `);
+  }
+}
+
+let genkiQuizData = [];
+
+function addSlide(html, isQuiz, quizType) {
   const div = document.createElement('div');
   div.className = 'slide';
   div.innerHTML = html;
   div.dataset.isQuiz = isQuiz ? 'true' : 'false';
+  div.dataset.quizType = quizType || 'hiragana';
   document.getElementById('slidesContainer').appendChild(div);
   allSlides.push(div);
 }
@@ -929,8 +1552,15 @@ function showSlide(n) {
     quizStarted = true;
     quizIndex = 0;
     quizScore = 0;
-    shuffleArray(quizData);
-    showQuizQuestion();
+    const qType = allSlides[currentSlide].dataset.quizType;
+    if (qType === 'genki') {
+      shuffleArray(genkiQuizData);
+      quizData = genkiQuizData;
+      showGenkiQuizQuestion();
+    } else {
+      shuffleArray(quizData);
+      showQuizQuestion();
+    }
   }
 
   // Show score on last slide
@@ -948,6 +1578,7 @@ function goToMenu() {
   document.getElementById('slideshow').style.display = 'none';
   document.getElementById('menu').style.display = 'flex';
   document.getElementById('progress').style.width = '0%';
+  document.body.style.overflow = '';
   quizStarted = false;
 }
 
@@ -1019,6 +1650,60 @@ function showFinalScore() {
   else msg = 'Keep practicing! Try going through the slides again.';
   const msgEl = document.getElementById('score-message');
   if (msgEl) msgEl.textContent = msg;
+}
+
+// ============================================================
+//  GENKI QUIZ ENGINE
+// ============================================================
+function showGenkiQuizQuestion() {
+  if (quizIndex >= genkiQuizData.length) {
+    document.getElementById('qq-char').textContent = '';
+    document.getElementById('qq-question').textContent = 'Quiz complete!';
+    document.getElementById('qq-options').innerHTML = '';
+    document.getElementById('qq-feedback').textContent = 'You got ' + quizScore + ' / ' + genkiQuizData.length + ' correct!';
+    document.getElementById('qq-feedback').style.color = '#27ae60';
+    document.getElementById('qq-progress').textContent = 'Go to the next slide to see your results!';
+    return;
+  }
+
+  const q = genkiQuizData[quizIndex];
+  document.getElementById('qq-question').textContent = q.question;
+  document.getElementById('qq-char').textContent = '';
+  document.getElementById('qq-feedback').textContent = '';
+  document.getElementById('qq-progress').textContent = 'Question ' + (quizIndex + 1) + ' of ' + genkiQuizData.length;
+
+  const choices = [...q.options];
+  shuffleArray(choices);
+
+  const container = document.getElementById('qq-options');
+  container.innerHTML = '';
+  choices.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-btn';
+    btn.textContent = opt;
+    btn.style.fontSize = '1em';
+    btn.onclick = () => checkGenkiAnswer(btn, opt, q.answer);
+    container.appendChild(btn);
+  });
+}
+
+function checkGenkiAnswer(btn, selected, correct) {
+  const btns = document.querySelectorAll('#qq-options .quiz-btn');
+  btns.forEach(b => b.onclick = null);
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    document.getElementById('qq-feedback').textContent = 'Correct!';
+    document.getElementById('qq-feedback').style.color = '#27ae60';
+    quizScore++;
+  } else {
+    btn.classList.add('wrong');
+    btns.forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+    document.getElementById('qq-feedback').textContent = 'The answer is: ' + correct;
+    document.getElementById('qq-feedback').style.color = '#e74c3c';
+  }
+  quizIndex++;
+  setTimeout(showGenkiQuizQuestion, 1100);
 }
 
 // ============================================================
