@@ -1544,7 +1544,7 @@ function showSlide(n) {
   allSlides[currentSlide].classList.add('active');
   document.getElementById('counter').textContent = (currentSlide + 1) + ' / ' + allSlides.length;
   document.getElementById('progress').style.width = ((currentSlide + 1) / allSlides.length * 100) + '%';
-  document.getElementById('prevBtn').disabled = currentSlide === 0;
+  document.getElementById('prevBtn').disabled = false;
   document.getElementById('nextBtn').disabled = currentSlide === allSlides.length - 1;
 
   // Start quiz if needed
@@ -1571,6 +1571,7 @@ function showSlide(n) {
 
 function changeSlide(dir) {
   const next = currentSlide + dir;
+  if (next < 0) { goToMenu(); return; }
   if (next >= 0 && next < allSlides.length) showSlide(next);
 }
 
